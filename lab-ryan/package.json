@@ -21,6 +21,7 @@
   },
   "homepage": "https://github.com/rjtj2007/06-tcp-servers#readme",
   "dependencies": {
+    "node": "^9.5.0",
     "uuid": "^3.2.1"
   }
 }

@@ -9,24 +9,36 @@ const ee = new EE();
 
 const pool = [];
 
+ee.on('default', function(client) {
+    client.socket.write('not a command - use and @ symbol');
+});
+
+
 //Creates a client. Issues it an ID.
 server.on('connection', (socket) => {
     let client = new Client(socket);
     pool.push(client);
     console.log(client.nickname);
+    
+    socket.write('Message:')
+
     socket.on('data', (data) => {
-        const textInput = data.toString().split(' ').shift().trim();
-        console.log(textInput);
-        if(command.startsWith('@')){
-            ee.emit(command, client, data.toString().split().splice(1)).join(' ');
+        const command = data.toString().split(' ').shift().trim();
+        console.log(command);
+        if(command.startsWith('@')) {
+            ee.emit(command, client, data.toString().split().splice(1).join());
             console.log('it works!');
             return;
         }
-
-        ee.emit('default');
+        ee.emit('default', client);
     });
 });
 
+ee.on('@nickname', (client, string) => {
+    let nickname = string.toString().split(' ').shift().trim();
+    client.nickname = nickname;
+    client.socket.write(`Your nickname is now: ${nickname}`);
+})
 
 //Tells you which port you are on.
 server.listen(PORT, () => {

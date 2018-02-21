@@ -9,6 +9,16 @@ const ee = new EE();
 
 const pool = [];
 
+ee.on('@help', function(client){
+    client.socket.write('These Are The Commands\n');
+    client.socket.write('@help: Lists Commands\n');
+    client.socket.write('@quit: Ends Connection\n');
+    client.socket.write('@list: Displays Connected Users\n');
+    client.socket.write('@all: Sends To All Users\n');
+    client.socket.write('@dm <nickname> <message>: Sends Direct Message\n');
+    client.socket.write('@nickname <newNickname>: Changes Nickname\n');
+})
+
 ee.on('@quit', function(client){
     client.socket.end('Goodbeye');
     var index = pool.indexOf(client)

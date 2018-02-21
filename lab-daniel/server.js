@@ -9,31 +9,46 @@ const ee = new EE();
 
 const pool = [];
 
+
+//Alerts user that they need to use @ symbol.
 ee.on('default', function(client) {
-    client.socket.write('not a command - use and @ symbol');
+    client.socket.write('not a command - use and @ symbol - - >');
 });
 
+//Allows user to send direct messages to other users.
+ee.on('@dm', function(client, string){
+    var nickname = string.split(' ').shift().trim();
+    var message = string.split(' ').splice(1).join(' ').trim();
 
-//Creates a client. Issues it an ID.
+    pool.forEach( c => {
+        if(c.nickname === nickname){
+            c.socket.write(`${client.nickname}: ${message}`);
+        }
+    });
+});
+
+//Shows all connected users.
+ee.on('@list')
+
+//Creates a user. Issues them an ID.
 server.on('connection', (socket) => {
     let client = new Client(socket);
     pool.push(client);
     console.log(client.nickname);
-    
-    socket.write('Message:')
+    socket.write('Type your message:')
 
     socket.on('data', (data) => {
-        const command = data.toString().split(' ').shift().trim();
-        console.log(command);
+        const command = data.toString().split().shift().trim();
+        console.log('=>:', command);
         if(command.startsWith('@')) {
             ee.emit(command, client, data.toString().split().splice(1).join());
-            console.log('it works!');
             return;
         }
         ee.emit('default', client);
     });
 });
 
+//Allows user to create nickname
 ee.on('@nickname', (client, string) => {
     let nickname = string.toString().split(' ').shift().trim();
     client.nickname = nickname;

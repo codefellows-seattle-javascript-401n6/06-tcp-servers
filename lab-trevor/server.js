@@ -35,7 +35,7 @@ ee.on('@list', function(client){
 })
 
 ee.on('default', function(client){
-    client.socket.write('not a command - use an @ symbol\n');
+    client.socket.write('not a command - use an @ symbol, try @help for options\n');
 });
 
 ee.on('@all', function(client, string){

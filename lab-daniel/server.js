@@ -15,6 +15,7 @@ ee.on('default',(client) => {
     client.socket.write('not a command - use and @ symbol - - >');
 });
 
+
 //Allows user to send direct messages to other users.
 ee.on('@dm', (client, string) => {
     var nickname = string.split(' ').shift().trim();
@@ -30,7 +31,7 @@ ee.on('@dm', (client, string) => {
 //Shows all connected users.
 ee.on('@list', (client, string) => {
     pool.forEach(users =>{
-        users.socket.write(`User id: ${client.nickname}`);
+        users.socket.write(`User id: ${client.nickname}\n`);
     });
 });
 
@@ -39,7 +40,7 @@ server.on('connection', (socket) => {
     let client = new Client(socket);
     pool.push(client);
     console.log(client.nickname);
-    socket.write('Connected!')
+    socket.write('Connected!\n')
 
     socket.on('data', (data) => {
         const command = data.toString().split().shift().trim();
@@ -57,7 +58,8 @@ ee.on('@nickname', (client, string) => {
     let nickname = string.toString().split(' ').shift().trim();
     client.nickname = nickname;
     client.socket.write(`Your nickname is now: ${nickname}`);
-})
+});
+
 
 //Tells you which port you are on.
 server.listen(PORT, () => {

@@ -2,7 +2,6 @@
 
 const net = require('net');
 const Events = require('events');
-
 const Client = require('./models/client');
 
 const PORT = process.env.PORT || 3000;

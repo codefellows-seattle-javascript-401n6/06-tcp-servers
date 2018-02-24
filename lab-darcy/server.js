@@ -19,6 +19,10 @@ ee.on('@all', function(client, string) {
     });
 });
 
+ee.on('@quit', function(client) {
+    client.socket.end('You have successfully quit chat.\n');
+});
+
 ee.on('@dm', function(client, string) {
     let nickname = string.split(' ').shift().trim();
     var message = string.split(' '). splice(1).join(' ').trim();

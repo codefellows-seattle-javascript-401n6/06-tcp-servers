@@ -1,3 +1,5 @@
+import { Socket } from 'dgram';
+
 'use strict';
 
 //telnet 192.168.0.8 3000 not working in terminal
@@ -56,3 +58,4 @@ server.on('connection', function(socket) {
 server.listen(PORT, () => {
     console.log(`listening on ${PORT}`);
 });
+

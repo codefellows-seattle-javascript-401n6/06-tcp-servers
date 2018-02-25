@@ -1,0 +1,21 @@
+{
+  "name": "lab-aaron",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "directories": {
+    "lib": "lib"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "events": "^2.0.0",
+    "net": "^1.0.2",
+    "uuid": "^3.2.1",
+    "uuidv4": "^1.0.0"
+  }
+}

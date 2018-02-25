@@ -75,8 +75,7 @@ server.on('connection', function (socket) {
     })
 
     socket.on('close', function (socket) {
-        console.log('inside close', client.nickname); 
-        // ee.emit('@all', client.nickname + 'has left the chat room');
+        ee.emit('@all', client, 'has left the chat room\n');// stretch goal!?! 
         ee.emit('@quit', client);
     })
 });

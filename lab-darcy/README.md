@@ -4,6 +4,9 @@
 
 ### Description:<br>
 This project is creating a TCP chatroom. Clients should be able to connect to the chatroom through the use of telnet. 
+```
+~ telnet "IP address" "host-server"
+```
 
 A Client constructor will model an individual connection.  Each client instance will contain an id, nickname, and socket properties.
 

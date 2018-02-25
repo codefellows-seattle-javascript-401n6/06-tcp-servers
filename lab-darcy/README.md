@@ -3,7 +3,7 @@
 ### Author: Darcy Knore
 
 ### Description:<br>
-This project is creatign a TCP chatroom. Clients should be able to connect to the chatroom through the use of telnet. 
+This project is creating a TCP chatroom. Clients should be able to connect to the chatroom through the use of telnet. 
 
 A Client constructor will model an individual connection.  Each client instance will contain an id, nickname, and socket properties.
 
@@ -21,7 +21,7 @@ When a socket emits:
 - data event: the data should be logged on the server and the commands below should be implemented 
 
 ### Architecture:
-This project uses javascript, jQuery, fs, telnet, and Node.js.  With the user experience in mind, the application layout was thoughtfully organized, easy to read, and able to be executed efficiently.
+This project uses javascript, jQuery, fs, telnet, events, uuid, and Node.js.  With the user experience in mind, the application layout was thoughtfully organized, easy to read, and able to be executed efficiently.
 
 ### Change Log
 This application has not been launched.

@@ -20,6 +20,7 @@ ee.on('@all', (client, string) => {
 });
 
 ee.on('@list', (client, string) => {
+    client.socket.write(`List of Users:\n`)
     clientPool.forEach(c => {
         c.socket.write(`${c.nickname}\n`);
     })
@@ -28,7 +29,6 @@ ee.on('@list', (client, string) => {
 ee.on('@dm', (client, string) => {
    var nickname = string.split(' ').shift().trim();
    var message = string.split(' ').splice(1).join(' ').trim();
-
    clientPool.forEach(c => {
        if (c.nickname === nickname) {
         c.socket.write(`${client.nickname}: ${message}`);
@@ -61,18 +61,13 @@ server.on('connection', (socket) => {
         const command = data.toString().split(' ').shift().trim();
         if (command.startsWith('@')) {
             ee.emit(command, client, data.toString().split(' ').splice(1).join(' '));
-            console.log('my command after the at:', data.toString().split(' ').splice(1).join(' '));
             return;
         }
         ee.emit('default', client);
     });
-
     socket.on('error', (err) => {
     console.log('Whoops! You have an error');
-    if (index !== -1) {
-        clientPool.splice(index, 1);
-        console.log(clientPool, 'clientPool');
-        }
+    throw err;
     })
 });
 

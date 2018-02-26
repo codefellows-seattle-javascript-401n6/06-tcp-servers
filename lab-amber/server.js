@@ -41,7 +41,7 @@ events.on('@dm', (client, string) => {
   var message = string.split(' ').splice(1).join(' ').trim();
   clientPool.forEach(client => {
     if (client.nickname === nickname) {
-      client.socket.write(`${client.nickname}: ${message}`);
+      client.socket.write(`${client.nickname}: ${message}\n`);
     }
   });
 });
@@ -65,7 +65,6 @@ function closeSocket(client) {
 }
 
 events.on('@quit', client => {
-  // client.socket.write(`Goodbye!\n`);
   closeSocket(client);
 });
 
@@ -80,8 +79,9 @@ server.on('connection', socket => {
     if (command.startsWith('@')) {
       events.emit(command, client, string);
       console.log('Data Emitted', data.toString());
+    } else {
+      events.emit('default', client);
     }
-    events.emit('default', client);
   });
 }).on('error', err => {
   throw err;

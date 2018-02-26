@@ -17,10 +17,6 @@ events.on('default', client => {
   client.socket.write(`Not a command - use an @ symbol\n`);
 });
 
-events.on('@quit', client => {
-  client.socket.end(`Goodbye!\n`);
-});
-
 events.on('@list', client => {
   client.socket.write(`Current Users:\n`);
   clientPool.forEach(user => {
@@ -57,6 +53,21 @@ events.on('@help', (client, string) => {
   });
 });
 
+function closeSocket(client) {
+  console.log('inside close socket');
+  for (let i = 0; i < clientPool.length; i++) {
+    if (client.nickname === clientPool[i].nickname) {
+      clientPool.splice(i, 1);
+      client.socket.end('Goodbye!\n');
+      process.exit(0);
+    }
+  }
+}
+
+events.on('@quit', client => {
+  // client.socket.write(`Goodbye!\n`);
+  closeSocket(client);
+});
 
 
 server.on('connection', socket => {

@@ -17,10 +17,6 @@ events.on('default', client => {
   client.socket.write(`Not a command - use an @ symbol\n`);
 });
 
-events.on('@quit', client => {
-  client.socket.end(`Goodbye!\n`);
-});
-
 events.on('@list', client => {
   client.socket.write(`Current Users:\n`);
   clientPool.forEach(user => {
@@ -45,7 +41,7 @@ events.on('@dm', (client, string) => {
   var message = string.split(' ').splice(1).join(' ').trim();
   clientPool.forEach(client => {
     if (client.nickname === nickname) {
-      client.socket.write(`${client.nickname}: ${message}`);
+      client.socket.write(`${client.nickname}: ${message}\n`);
     }
   });
 });
@@ -57,6 +53,20 @@ events.on('@help', (client, string) => {
   });
 });
 
+function closeSocket(client) {
+  console.log('inside close socket');
+  for (let i = 0; i < clientPool.length; i++) {
+    if (client.nickname === clientPool[i].nickname) {
+      clientPool.splice(i, 1);
+      client.socket.end('Goodbye!\n');
+      process.exit(0);
+    }
+  }
+}
+
+events.on('@quit', client => {
+  closeSocket(client);
+});
 
 
 server.on('connection', socket => {
@@ -69,8 +79,9 @@ server.on('connection', socket => {
     if (command.startsWith('@')) {
       events.emit(command, client, string);
       console.log('Data Emitted', data.toString());
+    } else {
+      events.emit('default', client);
     }
-    events.emit('default', client);
   });
 }).on('error', err => {
   throw err;

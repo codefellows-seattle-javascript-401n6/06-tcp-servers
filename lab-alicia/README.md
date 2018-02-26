@@ -18,24 +18,24 @@ Start telnet in your command line in a seperate browser tab
 telnet <your computer's ip address> <your PORT>
 ```
 ## Chat Commands:
-- List of commands:
-* Display list of all users
+### List of commands
+* Display list of all users:
 ```
 @list
 ```
-* Send message to all users 
+* Send message to all users: 
 ```
 @all <enter message here>
 ```
-* Change your user nickname
+* Change your user nickname:
 ```
 @nickname <enter your new name here>
 ```
-* Send a direct message to another user
+* Send a direct message to another user:
 ```
 @dm <username> <enter message here>
 ```
-* Quit the app
+* Quit the app:
 ```
 @quit
 ```

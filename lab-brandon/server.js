@@ -13,9 +13,15 @@ ee.on('default', function (client) {
     client.socket.write('not a command - use an @ symbol\n');
 });
 
+ee.on('@list', function (client, string) {
+    client.socket.write(`List of users:\n`)
+    clientPool.forEach(c => {
+        c.socket.write(`${c.nickname}\n`)
+    })
+})
 ee.on('@all', function (client, string) {
     clientPool.forEach(c => {
-        c.socket.write(`${client.nickname}: ${string}`);
+        c.socket.write(`${client.nickname}: ${string}\n`);
     })
 });
 
@@ -38,7 +44,7 @@ ee.on('@dm', function (client, string) {
 
     clientPool.forEach(c => {
         if (c.nickname === nickname) {
-            c.socket.write(`${client.nickname}: ${message}`);
+            c.socket.write(`${client.nickname}: ${message}\n`);
         }
     });
 });
@@ -63,7 +69,7 @@ server.on('connection', function (socket) {
     })
 
     socket.on('close', function (socket) {
-        ee.emit('@all', client, 'has left the chat room\n');// stretch goal!?! 
+        ee.emit('@all', client, 'has left the chat room\n');
         ee.emit('@quit', client);
     })
 });

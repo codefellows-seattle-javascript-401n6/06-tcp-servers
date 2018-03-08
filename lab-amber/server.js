@@ -59,7 +59,6 @@ function closeSocket(client) {
     if (client.nickname === clientPool[i].nickname) {
       clientPool.splice(i, 1);
       client.socket.end('Goodbye!\n');
-      process.exit(0);
     }
   }
 }

@@ -39,7 +39,7 @@ ee.on('@dm', (client, string) => {
 
   pool.forEach(c => {
     if (c.nickname === nickname) {
-      c.cocket.write(`${client.nickname}: ${message}`);
+      c.socket.write(`${client.nickname}: ${message}`);
     }
   });
 });
@@ -62,9 +62,9 @@ server.on('connection', (socket) => {
     }
   });
 
-  socket.on('close', function(socket) => {
-      ee.emit('@quit', client);
-  })
+  socket.on('close', function(socket) {
+    ee.emit('@quit', client);
+  });
 
   socket.on('data', data => {
     const command = data.toString().split(' ').shift().trim();

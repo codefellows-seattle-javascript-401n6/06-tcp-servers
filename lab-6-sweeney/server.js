@@ -51,15 +51,29 @@ ee.on('@help', (client, string)=>{
   });
 });
 
+function closeSocket(client){
+  console.log('inside close socket');
+  for(let i = 0; i < pool.length; i++){
+    if (client.nickname === pool[i].nickname){
+      pool.splice(i,1);
+      client.socket.end('Goodbye\n');
+    }
+  }
+}
+
+ee.on('@quit', client =>{
+  closeSocket(client);
+});
+
 server.on('connection', function(socket) {
-  var client = new Client(socket);
+  let client = new Client(socket);
   pool.push(client);
 
   socket.on('data', function(data) {
     const command = data.toString().split(' ').shift().trim();
-
+    const string = data.toString().split(' ').splice(1).join(' ');
     if (command.startsWith('@')) {
-      ee.emit(command, client, data.toString().split(' ').splice(1).join(' '));
+      ee.emit(command, client, string);
       console.log('my command after the at:', data.toString().split(' ').splice(1).join(' '));
       return;
     }

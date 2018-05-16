@@ -8,6 +8,7 @@ const server = net.createServer();
 const ee = new EE();
 
 const pool = [];
+const commands = ['@quit ends your session','@list lists all clients in the pool', '@nickname <new nickname> will change your nickname to the new nickname','@dm <client nickname> direct messages the client'];
 
 ee.on('@all', function(client, string) {
   pool.forEach( c => {
@@ -26,6 +27,13 @@ ee.on('@dm', function(client, string) {
   });
 });
 
+ee.on('@list', client =>{
+  client.socket.write(`Current Users :\n`);
+  pool.forEach(user => {
+    client.socket.write(`${user.nickname}\n`);
+  });
+});
+
 ee.on('@nickname', function(client, string) {
   let nickname = string.split(' ').shift().trim();
   client.nickname = nickname;
@@ -34,6 +42,13 @@ ee.on('@nickname', function(client, string) {
 
 ee.on('default', function(client, string) {
   client.socket.write('not a command - please use an @ symbol\n');
+});
+
+ee.on('@help', (client, string)=>{
+  client.socket.write(`AVAILABLE COMMANDS: \n`);
+  commands.forEach(command =>{
+    client.socket.write(`${command}\n`);
+  });
 });
 
 server.on('connection', function(socket) {

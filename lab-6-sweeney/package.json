@@ -1,0 +1,15 @@
+{
+  "name": "lab-6-sweeney",
+  "version": "1.0.0",
+  "description": "lab-6",
+  "main": "server.js",
+  "scripts": {
+    "test": "jest",
+    "start": "node server.js"
+  },
+  "author": "caitlin sweeney",
+  "license": "ISC",
+  "dependencies": {
+    "uuid": "^3.2.1"
+  }
+}
